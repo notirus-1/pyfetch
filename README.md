@@ -10,4 +10,8 @@ or by moving the pyfetch.py to /usr/local/bin/ by
 ```console
 $ mv pyfetch.py /usr/local/bin/
 ```
+and running it on the terminal with
+```console
+$ pyfetch.py
+```
 #last update on sep, 18 ^^
