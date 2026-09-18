@@ -1,18 +1,13 @@
-# importing necessary modules
-import os
-import platform
-import shutil
-import humanize 
-import subprocess
-import re
-import shlex
-# plan:
-# function has a category, that gets specs in order. Linux gets kernel version and distro name
-# cpu gets vendor name and core/thread count
-# gpu gets vendor name and model
-# ram gets memory
-# disk gets size and type
-# write the function to get os details
+#!/usr/bin/python3
+import os, shlex, re, subprocess, shutil, platform
+art = r"""
+ ____        _____    _       _     
+|  _ \ _   _|  ___|__| |_ ___| |__  
+| |_) | | | | |_ / _ \ __/ __| '_ \ 
+|  __/| |_| |  _|  __/ || (__| | | |
+|_|    \__, |_|  \___|\__\___|_| |_|
+       |___/                        
+"""
 CPU = {}
 RAM = {}
 GPU = []
@@ -38,16 +33,22 @@ def get_specs(name):
     specs = {
         "Linux": platform.release(),
         "CPU": CPU.get("""model name\t"""),
-        "RAM": RAM.get("MemTotal").strip(),
+        "totalRAM": RAM.get("MemTotal").strip(),
+        "usedRAM": RAM.get("Active").strip(),
         "Distro": Distro.get("NAME"),
-        "GPU": [item for item in GPU[0] if any(GPU_MODEL in item for GPU_MODEL in GPU_MODEL)],
+        "GPU": str([item for item in GPU[0] if any(GPU_MODEL in item for GPU_MODEL in GPU_MODEL)]).strip("[]").strip("'"),
+        "Disk": f'{round(shutil.disk_usage("/").free / (1024**3), 2)} GB / {round(shutil.disk_usage("/").total / (1024**3), 2)} GB',
     }
     result = specs.get(name)
     return result
-# find gpu
 print(os.getlogin() +'@' + platform.node())
+print(art)
 print(f"Distro: {get_specs("Distro").strip()}")
 print(f"Kernel: {get_specs("Linux")}")
 print(f'CPU: {get_specs("CPU").strip()}')
-print(f'RAM: {humanize.naturalsize(int(get_specs("RAM")) * 1024, binary=True)}')
+print(f'RAM: {round(int(get_specs("usedRAM")) * 1024 / (1024**3), 1)} GB / {round(int(get_specs("totalRAM")) * 1024 / (1024**3), 1)} GB')
 print(f'GPU: {get_specs("GPU")}')
+print(f'Disk: {get_specs("Disk")}')
+print(f'Storage: {get_specs("Disk")}')
+print(f'Shell: {os.getenv('SHELL').strip('bin/')}')
+print(f'DE: {os.getenv('DESKTOP_SESSION')}')
