@@ -2,15 +2,23 @@ fetch script written in python from scratch, made on 10-11th of Sep, 26
 <img width="670" height="466" alt="image" src="https://github.com/user-attachments/assets/1cab04bc-f342-4ee8-91d5-1e8f896f19eb" />
 
 installation instructions:
-install the script and either run it by just cding into it's directory and running
+clone the repository with git
+```console
+$ git clone https://github.com/notirus-1/pyfetch.git
+```
+cd into the repo
+```console
+$ cd pyfetch
+```
+run pyfetch
 ```console
 $ python pyfetch.py
 ```
-or by moving the pyfetch.py to /usr/local/bin/ by
+or install it to be runnable from the terminal
 ```console
-$ mv pyfetch.py /usr/local/bin/
+$ sudo mv pyfetch.py /usr/local/bin/
 ```
-and running it on the terminal with
+and run it with
 ```console
 $ pyfetch.py
 ```
